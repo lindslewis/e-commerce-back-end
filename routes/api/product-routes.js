@@ -5,12 +5,36 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get all products
 router.get('/', (req, res) => {
+  try {
+    const products = await Product.findAll({
+      include:[Category(id), Tag(id)]
+    })
+    res.status(200).json(products)
+  } catch (err) {
+    res.status(500).json({
+      msg:"Internal server error",
+      err
+    })
+  }
   // find all products
   // be sure to include its associated Category and Tag data
 });
 
 // get one product
 router.get('/:id', (req, res) => {
+  Product.findByPk(req.params.id).then(product=>{
+    if(!product){
+      return res.status(404).json({
+        msg: "The product you searched for does not exist in the database."
+      })
+    }
+    res.json(product)
+  }).catch(err=>{
+      res.status(500).json({
+        msg:"internal server error",
+        err
+      })
+  })
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
 });
