@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { restart } = require('nodemon');
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // The `/api/products` endpoint
@@ -21,6 +22,7 @@ router.get('/', (req, res) => {
 });
 
 // get one product
+// not sure how to do an include here, will come back to that 
 router.get('/:id', (req, res) => {
   Product.findByPk(req.params.id).then(product=>{
     if(!product){
@@ -40,7 +42,22 @@ router.get('/:id', (req, res) => {
 });
 
 // create new product
-router.post('/', (req, res) => {
+router.post('/',async (req, res) => {
+    try{
+      const newProduct = await Product.create({
+          product_name: req.body.product_name,
+          price: req.body.price,
+          stock: req.body.stock,
+          tagIds: req.body.tagIds
+      })
+      res.status(201).json(newProduct)
+    }catch(err){
+      console.log(err)
+      res.status(500).json({
+        msg:"internal server error",
+        err
+      })
+    }
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -114,6 +131,23 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
+  Product.destroy({
+    where:{
+      id:req.params.id
+    }
+  }).then(product=>{
+    if(!product){
+      return res.status(404).json({
+        msg: "No such product exists in the database."
+      })
+    }
+  res.json(product)
+  }).catch(err=>{
+    res.status(500).json({
+      msg:"internal server error",
+      err
+    })
+  })
   // delete one product by its `id` value
 });
 
