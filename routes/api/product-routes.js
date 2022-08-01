@@ -8,7 +8,7 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', async (req, res) => {
   try {
     const products = await Product.findAll({
-      include:[Category(id), Tag(id)]
+      // include:[{model:Category, through: category_id}]
     })
     res.status(200).json(products)
   } catch (err) {
@@ -30,6 +30,7 @@ router.get('/:id', (req, res) => {
         msg: "The product you searched for does not exist in the database."
       })
     }
+    console.log(product)
     res.json(product)
   }).catch(err=>{
       res.status(500).json({
