@@ -7,18 +7,21 @@ const ProductTag = require('./ProductTag');
 
 // const Products = sequelize.define('Products', )
 // Products belongsTo Category
-Product.belongsTo(Category);
+Product.belongsTo(Category, {
+  foreignKey: 'category_id'
+});
 
 // Categories have many Products
 Category.hasMany(Product, {
-  foreignKey: 'CategoryProductId'
+  foreignKey: 'category_id'
 });
 
 // Products belongToMany Tags (through ProductTag)
-Product.belongsTo(Tag, { through: 'ProductTag'});
+Product.belongsTo(Tag, { through: ProductTag, foreignKey
+: 'product_id'});
 
 // Tags belongToMany Products (through ProductTag)
-Tag.belongsToMany(Product, { through: 'ProductTag'});
+Tag.belongsToMany(Product, { through: ProductTag, foreignKey: 'tag_id'});
 
 module.exports = {
   Product,

@@ -6,7 +6,7 @@ const { Tag, Product, ProductTag } = require('../../models');
 router.get('/', async (req, res) => {
   try{
     const tags = await Tag.findAll({
-      include:[Product]
+      include:[{model:Product, through: ProductTag}]
     })
     res.status(200).json(tags)
   }catch(err){
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  Tag.findByPk(req.params.id).then(tag=>{
+  Tag.findByPk(req.params.id, {include: [{model:Product, through: ProductTag}]}).then(tag=>{
     if(!tag){
       return res.status(404).json({
         msg:"no such tag exists in the database"
