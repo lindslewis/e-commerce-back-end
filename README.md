@@ -10,6 +10,7 @@ This application was created for an e-commerce company's website with pre-create
 4. [credits](#credits)
 
 ## walkthrough-video
+https://user-images.githubusercontent.com/104105172/182265645-7e1fa6f0-d0f1-4909-bf8b-60f4c997efcd.mp4
 
 ## usage
 This app is made to test routes made for the website primarily through Insomnia. The developer does not need to provide the information on the products that the site is selling, as those are already provided and seeded. These routes are tested via Insomnia, which tests for 3 different routes (Category, Product, Tag). Of these 3 routes, it is broken down into 6 GET route tests, 3 POST tests, 3 PUT tests, and 3 DELETE tests. 
@@ -27,3 +28,6 @@ It also involved the usage of the app, [Insomnia](https://insomnia.rest/), which
 -University of Washington Bootcamp Instructors and Teaching Assistants
 -[Sequelize Associations](https://sequelize.org/docs/v6/core-concepts/assocs/)
 -[Sequelize Model Basics](https://sequelize.org/docs/v6/core-concepts/model-basics/)
+
+
+
